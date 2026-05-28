@@ -1,0 +1,3 @@
+# Keep this empty templates directory tracked by git
+*
+!.gitignore

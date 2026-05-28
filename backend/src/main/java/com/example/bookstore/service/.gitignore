@@ -1,0 +1,3 @@
+# Keep this empty package directory tracked by git
+*
+!.gitignore

@@ -1,0 +1,3 @@
+# Keep this empty js directory tracked by git
+*
+!.gitignore
