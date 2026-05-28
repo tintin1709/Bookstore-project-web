@@ -1,0 +1,1 @@
+-- The application seeds realistic demo data through DatabaseSeeder.java so passwords can be BCrypt-hashed safely.
