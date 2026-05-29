@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Error - IU Bookstore</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <a class="brand" th:href="@{/}">IU Bookstore</a>
+      <nav class="nav">
+        <a th:href="@{/catalog}">Catalog</a>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/profile}">Profile</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h1>Something went wrong</h1>
+        <p>The system encountered an unexpected error.</p>
+
+        <p>
+          <strong>Status:</strong>
+          <span th:text="${status}">500</span>
+        </p>
+
+        <p>
+          <strong>Error:</strong>
+          <span th:text="${error}">Internal Server Error</span>
+        </p>
+
+        <p>
+          <strong>Path:</strong>
+          <span th:text="${path}">/dashboard</span>
+        </p>
+
+        <a class="button" th:href="@{/catalog}">Back to Catalog</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Bookstore Management System · Web Application Development Final Project
+    </footer>
+  </body>
+</html>
