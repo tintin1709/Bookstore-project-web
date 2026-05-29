@@ -1,6 +1,7 @@
 package com.repository;
 
 import com.model.Notification;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
