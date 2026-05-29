@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IU Bookstore</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" th:href="@{/}">IU Bookstore</a>
+  <button class="hamburger" data-toggle-nav>☰</button>
+  <nav class="nav" id="mainNav">
+    <a th:href="@{/catalog}">Catalog</a>
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/cart}">Cart</a>
+    <a th:href="@{/orders}">Orders</a>
+    <a th:href="@{/reservations}">Reservations</a>
+    <a th:href="@{/notifications}">Notifications</a>
+    <a th:href="@{/manager/books}">Manager</a>
+    <a th:href="@{/admin/users}">Admin</a>
+    <a th:href="@{/profile}">Profile</a>
+    <form class="inline" th:action="@{/logout}" method="post"><button>Logout</button></form>
+  </nav>
+</header>
+<main class="container">
+<div th:if="${success}" class="alert success" th:text="${success}"></div>
+<div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+<h1>Admin · User Management</h1><form class="filters"><input name="q" th:value="${q}" placeholder="Search users"><button class="btn primary">Search</button></form><table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Roles</th><th>Action</th></tr><tr th:each="u:${users}"><td th:text="${u.fullName}"></td><td th:text="${u.email}"></td><td th:text="${u.phone}"></td><td th:text="${u.status}"></td><td th:text="${u.roles}"></td><td><form th:action="@{/admin/users/{id}(id=${u.id})}" method="post"><select name="status"><option>ACTIVE</option><option>INACTIVE</option></select><select name="role"><option>ADMIN</option><option>MANAGER</option><option>STAFF</option><option>CUSTOMER</option></select><button class="btn">Update</button></form></td></tr></table>
+
+</main>
+<footer class="footer">Bookstore Management System · Web Application Development Final Project</footer>
+</body></html>
