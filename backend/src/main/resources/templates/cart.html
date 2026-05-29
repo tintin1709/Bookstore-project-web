@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IU Bookstore</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" th:href="@{/}">IU Bookstore</a>
+  <button class="hamburger" data-toggle-nav>☰</button>
+  <nav class="nav" id="mainNav">
+    <a th:href="@{/catalog}">Catalog</a>
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/cart}">Cart</a>
+    <a th:href="@{/orders}">Orders</a>
+    <a th:href="@{/reservations}">Reservations</a>
+    <a th:href="@{/notifications}">Notifications</a>
+    <a th:href="@{/manager/books}">Manager</a>
+    <a th:href="@{/admin/users}">Admin</a>
+    <a th:href="@{/profile}">Profile</a>
+    <form class="inline" th:action="@{/logout}" method="post"><button>Logout</button></form>
+  </nav>
+</header>
+<main class="container">
+<div th:if="${success}" class="alert success" th:text="${success}"></div>
+<div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+<h1>Cart</h1><table><tr><th>Book</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr><tr th:each="l:${lines}"><td th:text="${l.title}"></td><td th:text="${l.quantity}"></td><td th:text="${l.price}"></td><td th:text="${l.lineTotal}"></td><td><form th:action="@{/cart/remove/{id}(id=${l.bookId})}" method="post"><button class="btn danger">Remove</button></form></td></tr></table><h2 th:text="'Subtotal: ' + ${subtotal} + ' VND'"></h2><form class="card" th:action="@{/cart/checkout}" method="post" data-confirm="Place this order?"><label>Shipping address<textarea name="address" required>123 Nguyen Van Linh, District 7, Ho Chi Minh City</textarea></label><label>Coupon code<input name="couponCode" placeholder="STUDENT10"></label><button class="btn primary">Checkout</button></form>
+
+</main>
+<footer class="footer">Bookstore Management System · Web Application Development Final Project</footer>
+</body></html>
