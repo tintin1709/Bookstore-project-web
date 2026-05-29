@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IU Bookstore</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" th:href="@{/}">IU Bookstore</a>
+  <button class="hamburger" data-toggle-nav>☰</button>
+  <nav class="nav" id="mainNav">
+    <a th:href="@{/catalog}">Catalog</a>
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/cart}">Cart</a>
+    <a th:href="@{/orders}">Orders</a>
+    <a th:href="@{/reservations}">Reservations</a>
+    <a th:href="@{/notifications}">Notifications</a>
+    <a th:href="@{/manager/books}">Manager</a>
+    <a th:href="@{/admin/users}">Admin</a>
+    <a th:href="@{/profile}">Profile</a>
+    <form class="inline" th:action="@{/logout}" method="post"><button>Logout</button></form>
+  </nav>
+</header>
+<main class="container">
+<div th:if="${success}" class="alert success" th:text="${success}"></div>
+<div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+<section class="hero">
+  <div><h1>Professional Bookstore Management</h1><p>A complete web app for managing books, orders, reservations, users, reports, and notifications.</p><a class="btn primary" th:href="@{/catalog}">Browse books</a></div>
+</section>
+<h2>Newest books</h2>
+<div class="grid cards"><article class="card" th:each="b:${books}"><img th:src="${b.imageUrl}" alt="Book cover"><h3 th:text="${b.title}"></h3><p th:text="${b.categoryName}"></p><strong th:text="${#numbers.formatDecimal(b.listPrice,0,'COMMA',0,'POINT')} + ' VND'"></strong><a class="btn" th:href="@{/catalog/{id}(id=${b.id})}">Details</a></article></div>
+
+</main>
+<footer class="footer">Bookstore Management System · Web Application Development Final Project</footer>
+</body></html>
