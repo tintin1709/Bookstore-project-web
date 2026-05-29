@@ -4,6 +4,7 @@ import com.repository.CatalogRepository;
 import com.repository.NotificationRepository;
 import com.repository.OrderRepository;
 import com.service.CurrentUserService;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,8 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("books",
-                catalog.searchBooks(null, null, "ACTIVE", null, null, null, "newest", 0, 8).getItems());
+                catalog.searchBooks(null, null, "ACTIVE", null,
+                            null, null, "newest", 0, 8).getItems());
         return "home";
     }
 
