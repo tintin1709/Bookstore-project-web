@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IU Bookstore</title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <script defer th:src="@{/js/app.js}"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" th:href="@{/}">IU Bookstore</a>
+  <button class="hamburger" data-toggle-nav>☰</button>
+  <nav class="nav" id="mainNav">
+    <a th:href="@{/catalog}">Catalog</a>
+    <a th:href="@{/dashboard}">Dashboard</a>
+    <a th:href="@{/cart}">Cart</a>
+    <a th:href="@{/orders}">Orders</a>
+    <a th:href="@{/reservations}">Reservations</a>
+    <a th:href="@{/notifications}">Notifications</a>
+    <a th:href="@{/manager/books}">Manager</a>
+    <a th:href="@{/admin/users}">Admin</a>
+    <a th:href="@{/profile}">Profile</a>
+    <form class="inline" th:action="@{/logout}" method="post"><button>Logout</button></form>
+  </nav>
+</header>
+<main class="container">
+<div th:if="${success}" class="alert success" th:text="${success}"></div>
+<div th:if="${error}" class="alert error" th:text="${error}"></div>
+
+<h1>Coupons</h1><form class="card form-grid" th:action="@{/manager/coupons}" method="post"><label>Code<input name="code" required></label><label>Type<select name="discountType"><option>PERCENT</option><option>AMOUNT</option></select></label><label>Value<input type="number" step="0.01" name="discountValue" required></label><label>Min order<input type="number" step="0.01" name="minOrderAmount" value="0"></label><label>Start<input type="datetime-local" name="startsAt" required></label><label>End<input type="datetime-local" name="endsAt" required></label><label>Status<select name="status"><option>ACTIVE</option><option>INACTIVE</option></select></label><button class="btn primary">Add coupon</button></form><table><tr><th>Code</th><th>Type</th><th>Value</th><th>Min order</th><th>Status</th></tr><tr th:each="c:${coupons}"><td th:text="${c.code}"></td><td th:text="${c.discountType}"></td><td th:text="${c.discountValue}"></td><td th:text="${c.minOrderAmount}"></td><td th:text="${c.status}"></td></tr></table>
+
+</main>
+<footer class="footer">Bookstore Management System · Web Application Development Final Project</footer>
+</body></html>
