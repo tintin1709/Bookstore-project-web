@@ -1,4 +1,4 @@
-package com.example.bookstore.model;
+package com.model;
 
 public class Author {
     private Long id;

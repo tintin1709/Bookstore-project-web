@@ -1,6 +1,6 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.repository.CatalogRepository;
+import com.repository.CatalogRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package com.example.bookstore.repository;
+package com.repository;
 
-import com.example.bookstore.model.Reservation;
+import com.model.Reservation;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

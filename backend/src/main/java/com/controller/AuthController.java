@@ -1,6 +1,6 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.repository.UserRepository;
+import com.repository.UserRepository;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

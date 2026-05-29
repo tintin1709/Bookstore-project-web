@@ -1,14 +1,15 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.model.Author;
-import com.example.bookstore.model.Book;
-import com.example.bookstore.model.Category;
-import com.example.bookstore.model.Coupon;
-import com.example.bookstore.repository.AuditLogRepository;
-import com.example.bookstore.repository.CatalogRepository;
-import com.example.bookstore.repository.OrderRepository;
-import com.example.bookstore.repository.ReservationRepository;
-import com.example.bookstore.service.CurrentUserService;
+import com.model.Author;
+import com.model.Book;
+import com.model.Category;
+import com.model.Coupon;
+import com.repository.AuditLogRepository;
+import com.repository.CatalogRepository;
+import com.repository.OrderRepository;
+import com.repository.ReservationRepository;
+import com.service.CurrentUserService;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

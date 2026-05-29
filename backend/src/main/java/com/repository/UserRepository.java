@@ -1,6 +1,6 @@
-package com.example.bookstore.repository;
+package com.repository;
 
-import com.example.bookstore.model.AppUser;
+import com.model.AppUser;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

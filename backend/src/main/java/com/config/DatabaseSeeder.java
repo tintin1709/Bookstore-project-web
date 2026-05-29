@@ -1,4 +1,4 @@
-package com.example.bookstore.config;
+package com.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,9 +1,9 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.repository.CatalogRepository;
-import com.example.bookstore.repository.NotificationRepository;
-import com.example.bookstore.repository.OrderRepository;
-import com.example.bookstore.service.CurrentUserService;
+import com.repository.CatalogRepository;
+import com.repository.NotificationRepository;
+import com.repository.OrderRepository;
+import com.service.CurrentUserService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
-package com.example.bookstore.repository;
+package com.repository;
 
-import com.example.bookstore.model.*;
+import com.model.*;
 import org.springframework.jdbc.core.RowMapper;
 
 public final class RowMappers {

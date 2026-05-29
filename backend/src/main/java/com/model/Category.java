@@ -1,4 +1,4 @@
-package com.example.bookstore.model;
+package com.model;
 
 public class Category {
     private Long id;

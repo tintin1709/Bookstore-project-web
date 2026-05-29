@@ -1,10 +1,10 @@
-package com.example.bookstore.service;
+package com.service;
 
-import com.example.bookstore.dto.CartLine;
-import com.example.bookstore.model.Book;
-import com.example.bookstore.model.Coupon;
-import com.example.bookstore.repository.CatalogRepository;
-import com.example.bookstore.repository.OrderRepository;
+import com.dto.CartLine;
+import com.model.Book;
+import com.model.Coupon;
+import com.repository.CatalogRepository;
+import com.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

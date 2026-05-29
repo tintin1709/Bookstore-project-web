@@ -1,7 +1,7 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.repository.UserRepository;
-import com.example.bookstore.service.CurrentUserService;
+import com.repository.UserRepository;
+import com.service.CurrentUserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

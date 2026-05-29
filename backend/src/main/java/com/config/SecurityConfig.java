@@ -1,6 +1,6 @@
-package com.example.bookstore.config;
+package com.config;
 
-import com.example.bookstore.repository.UserRepository;
+import com.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

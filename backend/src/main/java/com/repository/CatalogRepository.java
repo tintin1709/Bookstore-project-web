@@ -1,10 +1,10 @@
-package com.example.bookstore.repository;
+package com.repository;
 
-import com.example.bookstore.dto.PageResult;
-import com.example.bookstore.model.Author;
-import com.example.bookstore.model.Book;
-import com.example.bookstore.model.Category;
-import com.example.bookstore.model.Coupon;
+import com.dto.PageResult;
+import com.model.Author;
+import com.model.Book;
+import com.model.Category;
+import com.model.Coupon;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

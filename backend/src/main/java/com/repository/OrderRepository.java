@@ -1,7 +1,8 @@
-package com.example.bookstore.repository;
+package com.repository;
 
-import com.example.bookstore.dto.CartLine;
-import com.example.bookstore.model.OrderSummary;
+import com.dto.CartLine;
+import com.model.OrderSummary;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

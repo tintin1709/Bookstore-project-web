@@ -1,9 +1,9 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.dto.CartLine;
-import com.example.bookstore.repository.CatalogRepository;
-import com.example.bookstore.service.BookstoreService;
-import com.example.bookstore.service.CurrentUserService;
+import com.dto.CartLine;
+import com.repository.CatalogRepository;
+import com.service.BookstoreService;
+import com.service.CurrentUserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

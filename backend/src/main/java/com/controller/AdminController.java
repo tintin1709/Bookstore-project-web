@@ -1,7 +1,7 @@
-package com.example.bookstore.controller;
+package com.controller;
 
-import com.example.bookstore.repository.AuditLogRepository;
-import com.example.bookstore.repository.UserRepository;
+import com.repository.AuditLogRepository;
+import com.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

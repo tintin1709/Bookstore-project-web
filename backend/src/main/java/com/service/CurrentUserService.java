@@ -1,7 +1,7 @@
-package com.example.bookstore.service;
+package com.service;
 
-import com.example.bookstore.model.AppUser;
-import com.example.bookstore.repository.UserRepository;
+import com.model.AppUser;
+import com.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
