@@ -42,14 +42,14 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void createUser(String email, String pass, String name, String phone, String role) {
-        jdbc.update(
-                "INSERT INTO app_user(email,password_hash,full_name,phone,status,email_verified) VALUES(?,?,?,?,?,?)",
+        jdbc.update("INSERT INTO app_user(email,password_hash,full_name,phone,status,email_verified) VALUES(?,?,?,?,?,?)",
                 email, encoder.encode(pass), name, phone, "ACTIVE", true);
+
         Long uid = jdbc.queryForObject("SELECT id FROM app_user WHERE email=?", Long.class, email);
         Long rid = jdbc.queryForObject("SELECT id FROM role WHERE code=?", Long.class, role);
+
         jdbc.update("INSERT INTO user_role(user_id,role_id) VALUES(?,?)", uid, rid);
-        jdbc.update(
-                "INSERT INTO address(user_id,address_type,recipient_name,phone,line1,ward,district,city,is_default) VALUES(?,?,?,?,?,?,?,?,?)",
+        jdbc.update("INSERT INTO address(user_id,address_type,recipient_name,phone,line1,ward,district,city,is_default) VALUES(?,?,?,?,?,?,?,?,?)",
                 uid, "HOME", name, phone, "123 Nguyen Van Linh", "Tan Phong", "District 7", "Ho Chi Minh City", true);
     }
 
@@ -64,18 +64,20 @@ public class DatabaseSeeder implements CommandLineRunner {
     }
 
     private void seedCatalog() {
-        String[] cats = { "Programming", "Database", "Web Development", "AI & Data", "Business", "English Learning",
-                "Novel", "Design" };
+        String[] cats = { "Programming", "Database", "Web Development", "AI & Data", "Business", "English Learning", "Novel", "Design" };
         for (String c : cats)
             jdbc.update("INSERT INTO category(name,slug,description,status) VALUES(?,?,?,?)", c,
                     c.toLowerCase().replace(" & ", "-").replace(" ", "-"), "Books about " + c, "ACTIVE");
+
         String[] authors = { "Robert Martin", "Martin Fowler", "Joshua Bloch", "Andrew Hunt", "Thomas Cormen",
                 "Eric Freeman", "Kathy Sierra", "James Gosling", "Donald Knuth", "Bjarne Stroustrup", "Brian Kernighan",
                 "Steve McConnell" };
+
         for (String a : authors)
             jdbc.update("INSERT INTO author(name,slug,biography,country,status) VALUES(?,?,?,?,?)", a,
                     a.toLowerCase().replace(" ", "-"), "Well-known author in technology and education.",
                     "International", "ACTIVE");
+
         Random random = new Random(7);
         for (int i = 1; i <= 120; i++) {
             long catId = 1 + random.nextInt(cats.length);
@@ -116,14 +118,12 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void seedOrdersAndReservations() {
         Long customer = jdbc.queryForObject("SELECT id FROM app_user WHERE email='customer@test.com'", Long.class);
+        jdbc.update("INSERT INTO reservation(user_id,book_id,quantity,status,expires_at) VALUES(?,?,?,?,DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 7 DAY))", customer, 1, 1, "WAITING");
+        
         jdbc.update(
-                "INSERT INTO reservation(user_id,book_id,quantity,status,expires_at) VALUES(?,?,?,?,DATEADD('DAY',7,CURRENT_TIMESTAMP))",
-                customer, 1, 1, "WAITING");
-        jdbc.update(
-                "INSERT INTO notification(user_id,reservation_id,notification_type,title,message) VALUES(?,?,?,?,?)",
-                customer, 1, "WELCOME", "Welcome to IU Bookstore",
+                "INSERT INTO notification(user_id,reservation_id,notification_type,title,message) VALUES(?,?,?,?,?)", customer, 1, "WELCOME", "Welcome to IU Bookstore",
                 "Your account is ready. You can browse books, place orders, and reserve unavailable items.");
-        jdbc.update("INSERT INTO audit_log(actor_user_id,entity_type,entity_id,action,new_data) VALUES(?,?,?,?,?)", 1,
-                "SYSTEM", 1, "SEED", "Initial demo data generated");
+        
+        jdbc.update("INSERT INTO audit_log(actor_user_id,entity_type,entity_id,action,new_data) VALUES(?,?,?,?,?)", 1, "SYSTEM", 1, "SEED", "Initial demo data generated");
     }
 }
