@@ -1,5 +1,4 @@
-/backend/target/
-/frontend/node_modules/
+target/
 *.log
 *.tmp
 .DS_Store
