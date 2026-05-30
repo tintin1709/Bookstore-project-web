@@ -39,11 +39,29 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/register", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers("/dashboard").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/dashboard").hasAnyRole("ADMIN", "MANAGER", "STAFF")
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard", true)
+                        .successHandler((request, response, authentication) -> {
+                            boolean admin = authentication.getAuthorities()
+                                    .stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+                            boolean manager = authentication.getAuthorities()
+                                    .stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_MANAGER"));
+
+                            boolean staff = authentication.getAuthorities()
+                                    .stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_STAFF"));
+
+                            if (admin || manager || staff) {
+                                response.sendRedirect("/dashboard");
+                            } else {
+                                response.sendRedirect("/catalog");
+                            }
+                        })
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

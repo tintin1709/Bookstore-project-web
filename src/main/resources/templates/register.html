@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,17 +14,8 @@
     <button class="hamburger" data-toggle-nav>☰</button>
     <nav class="nav" id="mainNav">
       <a th:href="@{/catalog}">Catalog</a>
-      <a th:href="@{/dashboard}">Dashboard</a>
-      <a th:href="@{/cart}">Cart</a>
-      <a th:href="@{/orders}">Orders</a>
-      <a th:href="@{/reservations}">Reservations</a>
-      <a th:href="@{/notifications}">Notifications</a>
-      <a th:href="@{/manager/books}">Manager</a>
-      <a th:href="@{/admin/users}">Admin</a>
-      <a th:href="@{/profile}">Profile</a>
-      <form class="inline" th:action="@{/logout}" method="post">
-        <button>Logout</button>
-      </form>
+      <a th:href="@{/login}">Login</a>
+      <a th:href="@{/register}">Register</a>
     </nav>
   </header>
 
@@ -40,7 +31,7 @@
         <label>Phone<input th:field="*{phone}" required><small th:errors="*{phone}"></small></label>
         <label>Password<input type="password" th:field="*{password}" required minlength="8"><small th:errors="*{password}"></small></label>
         <label>Confirm password<input type="password" th:field="*{confirmPassword}" required><small th:errors="*{confirmPassword}"></small></label>
-        <button class="btn primary">Register</button>
+        <button class="btn primary register-btn">Register</button>
       </form>
     </div>
   </main>

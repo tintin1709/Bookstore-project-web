@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,17 +14,8 @@
     <button class="hamburger" data-toggle-nav>☰</button>
     <nav class="nav" id="mainNav">
       <a th:href="@{/catalog}">Catalog</a>
-      <a th:href="@{/dashboard}">Dashboard</a>
-      <a th:href="@{/cart}">Cart</a>
-      <a th:href="@{/orders}">Orders</a>
-      <a th:href="@{/reservations}">Reservations</a>
-      <a th:href="@{/notifications}">Notifications</a>
-      <a th:href="@{/manager/books}">Manager</a>
-      <a th:href="@{/admin/users}">Admin</a>
-      <a th:href="@{/profile}">Profile</a>
-      <form class="inline" th:action="@{/logout}" method="post">
-        <button>Logout</button>
-      </form>
+      <a th:href="@{/login}">Login</a>
+      <a th:href="@{/register}">Register</a>
     </nav>
   </header>
   
@@ -37,8 +28,10 @@
       <form th:action="@{/login}" method="post" data-validate>
         <label>Email<input type="email" name="username" required></label>
         <label>Password<input type="password" name="password" required></label>
-        <button class="btn primary">Login</button>
-        <p><a th:href="@{/register}">Create new account</a></p>
+        <div class="action-field-login">
+          <button class="btn primary">Login</button>
+          <a th:href="@{/register}">Create new account</a>
+        </div>
       </form>
     </div>
   </main>
@@ -48,5 +41,4 @@
   </footer>
 
 </body>
-
 </html>

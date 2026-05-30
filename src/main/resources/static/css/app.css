@@ -255,3 +255,26 @@ small {
     margin: 16px auto;
   }
 }
+/* other styles */
+.action-field-login {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+.action-field-login a {
+  margin-left: auto;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid var(--primary);
+  border-radius: 12px;
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.action-field-login a:hover {
+  background-color: transparent;
+  color: var(--primary);
+}
+.register-btn {
+  margin-top: 20px;
+}
