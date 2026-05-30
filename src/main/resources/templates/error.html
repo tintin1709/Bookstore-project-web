@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,8 +12,6 @@
       <a class="brand" th:href="@{/}">IU Bookstore</a>
       <nav class="nav">
         <a th:href="@{/catalog}">Catalog</a>
-        <a th:href="@{/dashboard}">Dashboard</a>
-        <a th:href="@{/profile}">Profile</a>
       </nav>
     </header>
 

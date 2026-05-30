@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,13 +15,13 @@
 
     <nav class="nav" id="mainNav">
       <a th:href="@{/catalog}">Catalog</a>
-      <a th:href="@{/dashboard}">Dashboard</a>
-      <a th:href="@{/cart}">Cart</a>
+      <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'STAFF')" th:href="@{/dashboard}">Dashboard</a>
+      <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart}">Cart</a>
       <a th:href="@{/orders}">Orders</a>
       <a th:href="@{/reservations}">Reservations</a>
       <a th:href="@{/notifications}">Notifications</a>
-      <a th:href="@{/manager/books}">Manager</a>
-      <a th:href="@{/admin/users}">Admin</a>
+      <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" th:href="@{/manager/books}">Manager</a>
+      <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/users}">Admin</a>
       <a th:href="@{/profile}">Profile</a>
 
       <form class="inline" th:action="@{/logout}" method="post">
@@ -73,6 +73,6 @@
   <footer class="footer">
     Bookstore Management System · Web Application Development Final Project
   </footer>
-</body>
 
+</body>
 </html>
