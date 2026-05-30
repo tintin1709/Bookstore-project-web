@@ -37,8 +37,10 @@
       <form th:action="@{/login}" method="post" data-validate>
         <label>Email<input type="email" name="username" required></label>
         <label>Password<input type="password" name="password" required></label>
-        <button class="btn primary">Login</button>
-        <p><a th:href="@{/register}">Create new account</a></p>
+        <div class="action-field-login">
+          <button class="btn primary">Login</button>
+          <a th:href="@{/register}">Create new account</a>
+        </div>
       </form>
     </div>
   </main>
