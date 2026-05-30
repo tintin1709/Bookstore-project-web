@@ -1,64 +1,104 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IU Bookstore</title>
-  <link rel="stylesheet" th:href="@{/css/app.css}">
-  <script defer th:src="@{/js/app.js}"></script>
-</head>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IU Bookstore</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}" />
+    <script defer th:src="@{/js/app.js}"></script>
+  </head>
 
-<body>
-  <header class="topbar">
-    <a class="brand" th:href="@{/}">IU Bookstore</a>
-    <button class="hamburger" data-toggle-nav>☰</button>
-    <nav class="nav" id="mainNav">
-      <a th:href="@{/catalog}">Catalog</a>
-      <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'STAFF')" th:href="@{/dashboard}">Dashboard</a>
-      <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart}">Cart</a>
-      <a th:href="@{/orders}">Orders</a>
-      <a th:href="@{/reservations}">Reservations</a>
-      <a th:href="@{/notifications}">Notifications</a>
-      <a sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" th:href="@{/manager/books}">Manager</a>
-      <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/users}">Admin</a>
-      <a th:href="@{/profile}">Profile</a>
-      
-      <form class="inline" th:action="@{/logout}" method="post">
-        <button>Logout</button>
-      </form>
-    </nav>
-  </header>
+  <body>
+    <header class="topbar">
+      <a class="brand" th:href="@{/}">IU Bookstore</a>
+      <button class="hamburger" data-toggle-nav>☰</button>
+      <nav class="nav" id="mainNav">
+        <a th:href="@{/catalog}">Catalog</a>
+        <a
+          sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'STAFF')"
+          th:href="@{/dashboard}"
+          >Dashboard</a
+        >
+        <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/cart}">Cart</a>
+        <a th:href="@{/orders}">Orders</a>
+        <a th:href="@{/reservations}">Reservations</a>
+        <a th:href="@{/notifications}">Notifications</a>
+        <a
+          sec:authorize="hasAnyRole('ADMIN', 'MANAGER')"
+          th:href="@{/manager/books}"
+          >Manager</a
+        >
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/users}">Admin</a>
+        <a th:href="@{/profile}">Profile</a>
 
-  <main class="container">
-    <div th:if="${success}" class="alert success" th:text="${success}"></div>
-    <div th:if="${error}" class="alert error" th:text="${error}"></div>
+        <form class="inline" th:action="@{/logout}" method="post">
+          <button>Logout</button>
+        </form>
+      </nav>
+    </header>
 
-    <h1>My Orders</h1>
-    <table>
-      <tr>
-        <th>No</th>
-        <th>Status</th>
-        <th>Payment</th>
-        <th>Shipment</th>
-        <th>Total</th>
-        <th>Date</th>
-      </tr>
+    <main class="container">
+      <div th:if="${success}" class="alert success">
+        <strong>Order placed successfully!</strong>
+        <span th:text="${success}"></span>
+      </div>
+      <div th:if="${error}" class="alert error" th:text="${error}"></div>
 
-      <tr th:each="o:${orders}">
-        <td th:text="${o.orderNo}"></td>
-        <td th:text="${o.status}"></td>
-        <td th:text="${o.paymentStatus}"></td>
-        <td th:text="${o.shipmentStatus}"></td>
-        <td th:text="${o.grandTotal}"></td>
-        <td th:text="${#temporals.format(o.placedAt,'yyyy-MM-dd HH:mm')}"></td>
-      </tr>
-    </table>
+      <h1>My Orders</h1>
+      <table>
+        <tr>
+          <th>No</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Shipment</th>
+          <th>Total</th>
+          <th>Date</th>
+        </tr>
 
-  </main>
-  
-  <footer class="footer">
-    Bookstore Management System · Web Application Development Final Project
-  </footer>
+        <tr th:each="o:${orders}">
+          <td th:text="${o.orderNo}"></td>
 
-</body>
+          <td>
+            <span
+              class="status-badge status-confirmed"
+              th:text="${o.status == 'CONFIRMED' ? 'Confirmed' : o.status}"
+            >
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="status-badge status-paid"
+              th:text="${o.paymentStatus == 'PAID' ? 'Paid' : o.paymentStatus}"
+            >
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="status-badge status-processing"
+              th:text="${o.shipmentStatus == 'PROCESSING' ? 'Processing' : o.shipmentStatus}"
+            >
+            </span>
+          </td>
+
+          <td
+            th:text="${#numbers.formatDecimal(o.grandTotal, 0, 'COMMA', 0, 'POINT') + ' VND'}"
+          ></td>
+
+          <td
+            th:text="${#temporals.format(o.placedAt, 'dd/MM/yyyy HH:mm')}"
+          ></td>
+        </tr>
+      </table>
+    </main>
+
+    <footer class="footer">
+      Bookstore Management System · Web Application Development Final Project
+    </footer>
+  </body>
 </html>

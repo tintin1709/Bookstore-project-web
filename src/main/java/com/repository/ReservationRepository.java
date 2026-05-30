@@ -15,15 +15,35 @@ public class ReservationRepository {
     }
 
     public void createReservation(Long userId, Long bookId, int quantity) {
-        jdbc.update(
-                "INSERT INTO reservation(user_id,book_id,quantity,status,expires_at) VALUES(?,?,?,?,DATEADD('DAY',7,CURRENT_TIMESTAMP))",
-                userId, bookId, quantity, "WAITING");
-        Long resId = jdbc.queryForObject("SELECT MAX(id) FROM reservation WHERE user_id=?", Long.class, userId);
-        jdbc.update(
-                "INSERT INTO notification(user_id,reservation_id,notification_type,title,message) VALUES(?,?,?,?,?)",
-                userId, resId, "RESERVATION", "Reservation submitted",
-                "Your reservation request has been received and will be reviewed by staff.");
-    }
+    String bookTitle = jdbc.queryForObject(
+            "SELECT title FROM book WHERE id = ?",
+            String.class,
+            bookId
+    );
+
+    jdbc.update(
+            "INSERT INTO reservation(user_id, book_id, quantity, status, expires_at) " +
+            "VALUES (?, ?, ?, ?, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 7 DAY))",
+            userId, bookId, quantity, "WAITING"
+    );
+
+    Long resId = jdbc.queryForObject(
+            "SELECT MAX(id) FROM reservation WHERE user_id = ?",
+            Long.class,
+            userId
+    );
+
+    jdbc.update(
+            "INSERT INTO notification(user_id, reservation_id, notification_type, title, message) " +
+            "VALUES (?, ?, ?, ?, ?)",
+            userId,
+            resId,
+            "RESERVATION",
+            "Reservation request submitted successfully",
+            "Your reservation request for \"" + bookTitle + "\" has been received. " +
+            "Quantity: " + quantity + ". Please wait for staff approval."
+    );
+}
 
     public List<Reservation> findByUser(Long userId) {
         return jdbc.query(
