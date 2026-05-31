@@ -47,7 +47,7 @@
 
         <h2 th:text="${#numbers.formatDecimal(book.listPrice,0,'COMMA',0,'POINT')} + ' VND'"></h2>
 
-        <div class="actions">
+        <div class="actions book-actions-container">
           <form th:action="@{/cart/add/{id}(id=${book.id})}" method="post">
             <input type="number" name="quantity" value="1" min="1">
             <button class="btn primary">Add to cart</button>

@@ -719,6 +719,15 @@ tr:hover td {
   margin-top: 14px;
 }
 
+.book-actions-container form {
+  margin-bottom: 10px;
+}
+
+.book-actions-container .btn {
+  text-align: center;
+  width: 120px;
+  margin-left: 15px;
+}
 /* ========== Cart Page ========== */
 
 .page-header {
@@ -915,6 +924,32 @@ td.total {
 .stat div {
   color: var(--muted);
   font-weight: 700;
+}
+
+.dashboard-overview {
+  margin-top: 50px;
+}
+
+/* ========== Manager Books ========== */
+
+.manager-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.manager-table td a {
+  padding: 8px 15px;
+  font-size: 15px;
+  font-weight: 750;
+}
+  
+/* ========== Admin Users ========== */
+
+.admin-user-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 /* ========== Pagination ========== */

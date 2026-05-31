@@ -34,20 +34,26 @@
     <div th:if="${error}" class="alert error" th:text="${error}"></div>
 
     <h1>Manager · Books</h1>
-    <div class="actions"><a class="btn primary" th:href="@{/manager/books/new}">New book</a><a class="btn"
-        th:href="@{/manager/export/books.csv}">Export CSV</a></div>
-    <form class="filters"><input name="q" th:value="${q}" placeholder="Search">
+    <div class="actions manager-actions">
+      <a class="btn primary" th:href="@{/manager/books/new}">New book</a>
+      <a class="btn" th:href="@{/manager/export/books.csv}">Export CSV</a>
+    </div>
+    
+    <form class="filters">
+      <input name="q" th:value="${q}" placeholder="Search">
+
       <select name="status">
         <option value="">Any status</option>
         <option>ACTIVE</option>
         <option>INACTIVE</option>
       </select>
+
       <button class="btn primary">Filter</button>
     </form>
 
     <p th:text="'Showing ' + ${pageResult.startItem} + '-' + ${pageResult.endItem} + ' of ' + ${pageResult.totalItems}"></p>
 
-    <table>
+    <table class="manager-table">
       <tr>
         <th>SKU</th>
         <th>Title</th>
@@ -65,7 +71,10 @@
         <td th:text="${b.listPrice}"></td>
         <td th:text="${b.stockOnHand}"></td>
         <td th:text="${b.status}"></td>
-        <td><a class="btn" th:href="@{/manager/books/{id}/edit(id=${b.id})}">Edit</a>
+        
+        <td>
+          <a class="btn" th:href="@{/manager/books/{id}/edit(id=${b.id})}">Edit</a>
+
           <form class="inline" th:action="@{/manager/books/{id}/delete(id=${b.id})}" 
                 method="post" data-confirm="Soft delete this book?">
             <button class="btn danger">Delete</button>
