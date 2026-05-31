@@ -79,17 +79,18 @@
         />
 
         <select name="sort">
-          <option value="title">Title</option>
-          <option value="price_asc">Price ↑</option>
-          <option value="price_desc">Price ↓</option>
-          <option value="newest">Newest</option>
+          <option value="title" th:selected="${sort == 'title'}">Title</option>
+          <option value="price_asc" th:selected="${sort == 'price_asc'}">Price ↑</option>
+          <option value="price_desc" th:selected="${sort == 'price_desc'}">Price ↓</option>
+          <option value="newest" th:selected="${sort == 'newest'}">Newest</option>
         </select>
 
-        <select name="size">
-          <option>10</option>
-          <option>20</option>
-          <option>50</option>
-          <option>100</option>
+        <label for="size" class="size-label">books per page</label>
+        <select name="size" id="size">
+          <option value="10" th:selected="${size == 10}">10</option>
+          <option value="20" th:selected="${size == 20}">20</option>
+          <option value="50" th:selected="${size == 50}">50</option>
+          <option value="100" th:selected="${size == 100}">100</option>
         </select>
 
         <button class="btn primary">Search</button>
@@ -102,7 +103,7 @@
       ></p>
 
       <div class="grid cards">
-        <article class="card" th:each="b:${pageResult.items}">
+        <article class="card book-card" th:each="b:${pageResult.items}">
           <img th:src="${b.imageUrl}" alt="Book cover" />
           <h3 th:text="${b.title}"></h3>
           <p>
@@ -137,7 +138,7 @@
         <a
           class="btn"
           th:if="${pageResult.hasPrevious()}"
-          th:href="@{/catalog(page=${pageResult.page-1},size=${pageResult.size},q=${q})}"
+          th:href="@{/catalog(page=${pageResult.page-1},size=${pageResult.size},q=${q},categoryId=${categoryId},minPrice=${minPrice},maxPrice=${maxPrice},minStock=${minStock},sort=${sort})}"
           >Previous</a
         >
 
@@ -148,7 +149,7 @@
         <a
           class="btn"
           th:if="${pageResult.hasNext()}"
-          th:href="@{/catalog(page=${pageResult.page+1},size=${pageResult.size},q=${q})}"
+          th:href="@{/catalog(page=${pageResult.page+1},size=${pageResult.size},q=${q},categoryId=${categoryId},minPrice=${minPrice},maxPrice=${maxPrice},minStock=${minStock},sort=${sort})}"
           >Next</a
         >
       </div>

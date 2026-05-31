@@ -36,7 +36,7 @@
     <div class="grid two">
       <form class="card" th:action="@{/profile/update}" method="post">
         <label>Full name<input name="fullName" th:value="${user.fullName}" required></label>
-        <label>Phone<input name="phone" th:value="${user.phone}" required></label>
+        <label>Phone number<input name="phone" th:value="${user.phone}" required></label>
         <button class="btn primary">Save</button>
       </form>
 

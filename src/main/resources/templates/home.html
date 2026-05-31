@@ -43,7 +43,7 @@
 
     <h2>Newest books</h2>
     <div class="grid cards">
-      <article class="card" th:each="b:${books}"><img th:src="${b.imageUrl}" alt="Book cover">
+      <article class="card book-card" th:each="b:${books}"><img th:src="${b.imageUrl}" alt="Book cover">
         <h3 th:text="${b.title}"></h3>
         <p th:text="${b.categoryName}"></p>
         <strong th:text="${#numbers.formatDecimal(b.listPrice,0,'COMMA',0,'POINT')} + ' VND'"></strong>
