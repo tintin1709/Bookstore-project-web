@@ -73,10 +73,24 @@ public class ManagerController {
     }
 
     @PostMapping("/books")
-    public String save(@ModelAttribute Book book, Authentication auth) {
-        Long id = catalog.saveBook(book, current.current(auth).getId());
-        audit.log(current.current(auth).getId(), "BOOK", id, "SAVE", null, book.getTitle());
-        return "redirect:/manager/books";
+    public String save(@ModelAttribute Book book, Authentication auth, Model model) {
+        try {
+            Long actorId = current.current(auth).getId();
+
+            Long id = catalog.saveBook(book, actorId);
+
+            audit.log(actorId, "BOOK", id, "SAVE", null, book.getTitle());
+
+            return "redirect:/manager/books";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("book", book);
+            model.addAttribute("categories", catalog.categories());
+            model.addAttribute("error",
+                    "Cannot save book. Please check SKU, ISBN13, category, price, stock, and required fields.");
+
+            return "book-form";
+        }
     }
 
     @PostMapping("/books/{id}/delete")
@@ -175,8 +189,18 @@ public class ManagerController {
     }
 
     @PostMapping("/books/upload-image")
-    public String uploadImage(@RequestParam("file") MultipartFile file) {
+@ResponseBody
+public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+    try {
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().body("Uploaded file is empty.");
+        }
 
-        return fileStorageService.store(file);
+        String imageUrl = fileStorageService.store(file);
+        return ResponseEntity.ok(imageUrl);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.internalServerError().body("Image upload failed: " + e.getMessage());
     }
+}
 }

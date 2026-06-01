@@ -1,4 +1,11 @@
+# Ignore local configuration files
+*.properties
+src/main/resources/*.properties
+src/test/resources/*.properties
+
+# Ignore sensitive environment files
+.env
+*.env
+
+# Ignore build output
 target/
-*.log
-*.tmp
-.DS_Store

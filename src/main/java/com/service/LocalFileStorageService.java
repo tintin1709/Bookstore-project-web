@@ -1,17 +1,19 @@
 package com.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class LocalFileStorageService implements FileStorageService {
 
-    private final String uploadDir = "uploads/";
+    private final Path uploadPath = Paths.get(System.getProperty("user.dir"), "uploads");
 
     @Override
     public String store(MultipartFile file) {
@@ -26,25 +28,40 @@ public class LocalFileStorageService implements FileStorageService {
             throw new IllegalArgumentException("Invalid file name");
         }
 
-        if (!originalFilename.toLowerCase().matches(".*\\.(png|jpg|jpeg|webp)$")) {
+        String cleanFilename = StringUtils.cleanPath(originalFilename);
+        String lowerFilename = cleanFilename.toLowerCase();
+
+        if (!lowerFilename.endsWith(".png")
+                && !lowerFilename.endsWith(".jpg")
+                && !lowerFilename.endsWith(".jpeg")
+                && !lowerFilename.endsWith(".webp")) {
             throw new IllegalArgumentException("Only image files are allowed");
         }
-        
-        // Generate a unique filename to prevent overwriting
+
         try {
-            String filename = System.currentTimeMillis() + "_"
-                    + StringUtils.cleanPath(file.getOriginalFilename());
+            // Create uploads folder if it does not exist
+            Files.createDirectories(uploadPath);
 
-            Path path = Paths.get(uploadDir);
-            Files.createDirectories(path);
+            // Generate unique filename
+            String filename = System.currentTimeMillis() + "_" + cleanFilename;
 
-            Path filePath = path.resolve(filename);
-            file.transferTo(filePath.toFile());
+            Path targetPath = uploadPath.resolve(filename).normalize();
+
+            // Prevent path traversal attack
+            if (!targetPath.startsWith(uploadPath)) {
+                throw new IllegalArgumentException("Invalid file path");
+            }
+
+            // Save file
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            }
 
             return "/uploads/" + filename;
 
         } catch (Exception e) {
-            throw new RuntimeException("File upload failed", e);
+            e.printStackTrace();
+            throw new RuntimeException("File upload failed: " + e.getMessage(), e);
         }
     }
 }

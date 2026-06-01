@@ -43,17 +43,37 @@ function handleFileUpload(input) {
   const formData = new FormData();
   formData.append("file", file);
 
+  const csrfToken = document.querySelector('input[name="_csrf"]')?.value;
+
   fetch("/manager/books/upload-image", {
     method: "POST",
-    body: formData
+    body: formData,
+    headers: csrfToken ? { "X-CSRF-TOKEN": csrfToken } : {}
   })
-  .then(res => {
-    if (!res.ok) throw new Error("Upload failed");
-    return res.text();
-  })
+  .then(async (res) => {
+  const text = await res.text();
+
+  if (!res.ok) {
+    throw new Error(text || "Upload failed with status " + res.status);
+  }
+
+  return text;
+})
   .then(url => {
-    document.querySelector('input[name="imageUrl"]').value = url;
-    document.querySelector('.book-form-gr6 img').src = url;
+    const imageUrlInput = document.querySelector('input[name="imageUrl"]');
+    const preview = document.getElementById("bookImagePreview");
+
+    if (imageUrlInput) {
+      imageUrlInput.value = url;
+    }
+
+    if (preview) {
+      preview.src = url;
+      preview.style.display = "block";
+    }
   })
-  .catch(err => console.error(err));
+.catch(err => {
+  console.error(err);
+  alert(err.message);
+});
 }
