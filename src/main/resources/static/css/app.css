@@ -943,6 +943,30 @@ td.total {
   font-size: 15px;
   font-weight: 750;
 }
+
+/* ========== Book Form ========== */
+
+.book-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.book-form-gr1, .book-form-gr2, .book-form-gr3,
+.book-form-gr4, .book-form-gr5, .book-form-gr6 {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.book-form-gr2 label, .book-form-gr3 label,
+.book-form-gr4 label, .book-form-gr5 label {
+  flex: 1;
+}
+
+
   
 /* ========== Admin Users ========== */
 

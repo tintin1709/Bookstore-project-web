@@ -9,6 +9,7 @@ import com.repository.CatalogRepository;
 import com.repository.OrderRepository;
 import com.repository.ReservationRepository;
 import com.service.CurrentUserService;
+import com.service.FileStorageService;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,14 +32,16 @@ public class ManagerController {
     private final ReservationRepository reservations;
     private final AuditLogRepository audit;
     private final CurrentUserService current;
+    private final FileStorageService fileStorageService;
 
     public ManagerController(CatalogRepository catalog, OrderRepository orders, ReservationRepository reservations,
-            AuditLogRepository audit, CurrentUserService current) {
+            AuditLogRepository audit, CurrentUserService current, FileStorageService fileStorageService) {
         this.catalog = catalog;
         this.orders = orders;
         this.reservations = reservations;
         this.audit = audit;
         this.current = current;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/books")
@@ -168,5 +172,11 @@ public class ManagerController {
                         .append(b.getStockOnHand()).append(',').append(b.getStatus()).append('\n'));
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=books.csv")
                 .contentType(MediaType.TEXT_PLAIN).body(sb.toString());
+    }
+
+    @PostMapping("/books/upload-image")
+    public String uploadImage(@RequestParam("file") MultipartFile file) {
+
+        return fileStorageService.store(file);
     }
 }

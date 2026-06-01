@@ -35,41 +35,63 @@
 
     <h1 th:text="${book.id == null ? 'New Book' : 'Edit Book'}"></h1>
 
-    <form class="card form-grid" th:action="@{/manager/books}" th:object="${book}" method="post" data-validate>
+    <form class="book-form" th:action="@{/manager/books}" th:object="${book}" method="post" data-validate>
       <input type="hidden" th:field="*{id}">
-      <label>Category
-        <select th:field="*{categoryId}" required>
-          <option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}"></option>
-        </select>
-      </label>
+      <div class="book-form-gr1">
+        <label>Category
+          <select th:field="*{categoryId}" required>
+            <option th:each="c:${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+          </select>
+        </label>
+      </div>
 
-      <label>SKU<input th:field="*{sku}" required></label>
-      <label>ISBN13<input th:field="*{isbn13}" minlength="13" maxlength="13" required></label>
-      <label>Title<input th:field="*{title}" required></label>
-      <label>Publisher<input th:field="*{publisher}"></label>
-      <label>Year<input type="number" th:field="*{publicationYear}"></label>
-      <label>Language<input th:field="*{language}"></label>
-      <label>Price<input type="number" step="0.01" th:field="*{listPrice}" required min="0"></label>
-      <label>Stock<input type="number" th:field="*{stockOnHand}" required min="0"></label>
-      <label>Reorder level<input type="number" th:field="*{reorderLevel}" required min="0"></label>
+      <div class="book-form-gr2">
+        <label>SKU<input th:field="*{sku}" placeholder="e.g. SKU-0001" required></label>
+        <label>ISBN13<input th:field="*{isbn13}" minlength="13" maxlength="13" 
+          placeholder="e.g. 9780000000017" required></label>
+      </div>
+      
+      <div class="book-form-gr3">
+        <label>Title<input th:field="*{title}" placeholder="e.g. Clean Code" required></label>
+      </div>
 
-      <label>Status
-        <select th:field="*{status}">
-          <option th:value="ACTIVE" th:text="ACTIVE"></option>
-          <option th:value="INACTIVE" th:text="INACTIVE"></option>
-        </select>
-      </label>
+      <div class="book-form-gr4">
+        <label>Publisher<input th:field="*{publisher}" placeholder="e.g. O'Reilly Media" required></label>
+        <label>Year<input type="number" th:field="*{publicationYear}" placeholder="e.g. 2020"></label>
+        <label>Language<input th:field="*{language}" placeholder="e.g. English"></label>
+      </div>      
+      
+      <div class="book-form-gr5">
+        <label>Price<input type="number" step="0.01" th:field="*{listPrice}"
+              placeholder="e.g. 200000" required min="0"></label>
+        <label>Stock<input type="number" th:field="*{stockOnHand}" placeholder="e.g. 20" required min="0"></label>
+        <label>Reorder level<input type="number" th:field="*{reorderLevel}" placeholder="e.g. 10" required min="0"></label>
+        <label>Status
+          <select th:field="*{status}">
+            <option th:value="ACTIVE" th:text="ACTIVE"></option>
+            <option th:value="INACTIVE" th:text="INACTIVE"></option>
+          </select>
+        </label>
+      </div>
+      
+      <div class="book-form-gr6">
+        <label>Book Image</label>
+        <img th:if="*{imageUrl}" th:src="*{imageUrl}">
 
-      <label>Image URL<input th:field="*{imageUrl}"></label>
+        <input type="file" name="file" accept="image/*" onchange="handleFileUpload(this)">
+        <input type="hidden" th:field="*{imageUrl}">
+      </div>
+
       <label class="wide">Description<textarea th:field="*{description}"></textarea></label>
       <button class="btn primary">Save</button>
-    </form>
 
+    </form>
   </main>
 
   <footer class="footer">
     Bookstore Management System · Web Application Development Final Project
   </footer>
 
+  <script src="/src/main/resources/static/js/app.js"></script>
 </body>
 </html>
