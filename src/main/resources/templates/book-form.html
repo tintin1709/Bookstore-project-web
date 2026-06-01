@@ -55,8 +55,8 @@
 
       <label>Status
         <select th:field="*{status}">
-          <option>ACTIVE</option>
-          <option>INACTIVE</option>
+          <option th:value="ACTIVE" th:text="ACTIVE"></option>
+          <option th:value="INACTIVE" th:text="INACTIVE"></option>
         </select>
       </label>
 
