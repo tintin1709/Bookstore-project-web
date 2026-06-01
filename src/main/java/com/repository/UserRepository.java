@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Repository
 public class UserRepository {
@@ -71,7 +72,7 @@ public class UserRepository {
             ps.setString(3, fullName);
             ps.setString(4, phone);
             ps.setString(5, "ACTIVE");
-            ps.setBoolean(6, true);
+            ps.setBoolean(6, false);
             return ps;
         }, keyHolder);
         Long id = keyHolder.getKey().longValue();
@@ -102,5 +103,34 @@ public class UserRepository {
     public List<String> rolesOf(Long userId) {
         return jdbc.queryForList("SELECT r.code FROM role r JOIN user_role ur ON r.id=ur.role_id WHERE ur.user_id=?",
                 String.class, userId);
+    }
+
+    public void createVerificationToken(Long userId, String token, LocalDateTime expiresAt) {
+        jdbc.update(
+                "INSERT INTO email_verification_token(user_id, token, expires_at, used) VALUES(?,?,?,false)",
+                userId, token, expiresAt);
+    }
+
+    public Optional<Long> findUserIdByValidToken(String token) {
+        try {
+            Long userId = jdbc.queryForObject(
+                    "SELECT user_id FROM email_verification_token " +
+                            "WHERE token=? AND used=false AND expires_at > CURRENT_TIMESTAMP",
+                    Long.class,
+                    token);
+            return Optional.of(userId);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
+    public void markEmailVerified(Long userId, String token) {
+        jdbc.update(
+                "UPDATE app_user SET email_verified=true, updated_at=CURRENT_TIMESTAMP WHERE id=?",
+                userId);
+
+        jdbc.update(
+                "UPDATE email_verification_token SET used=true WHERE token=?",
+                token);
     }
 }
